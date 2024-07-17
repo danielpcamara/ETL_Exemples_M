@@ -2,6 +2,8 @@
 
 This folder's goal is to convert a General ledger save in the PDF format to a CSV containing.
 
+![alt text](image-4.png)
+
 ## Requirements
 * No data loss is allow.
 * Each row needs to have one journal entry.
@@ -79,8 +81,11 @@ in
 This will be needs since power query can identify the same column in different positions for each page as shown bellow.
 
 Example Page 109:
+
 ![alt text](image.png)
+
 Example Page 108:
+
 ![alt text](image-1.png)
 
 In the first case the "Débito" column is in the `Column17`, in the second the same columns is in the position `Column9`.
