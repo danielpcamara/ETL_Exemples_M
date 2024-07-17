@@ -9,7 +9,6 @@ This folder's goal is to convert a General ledger save in the PDF format to a CS
 * No partial solutions, the solution for this report need to work in reports of similar layout.
 * No journal entry can be duplicated. If a journal entry has the same EIN, Branch, Date, Sequency Value, Sequency, Document and History and only a debit and a credit value, it can only be one journal entry.
 * Keep the row of report to be able to track the source of information. (Debug and Compliance).
-* 
 
 ## Files
 For this example, the "General ledger 2021.pdf" will be used as source in the "ETL.xlsx" file.
@@ -167,8 +166,7 @@ To accomplish that another `Table.Group` will be used. And a conditional column 
 ```
     #"Tipo Alterado1" = Table.TransformColumnTypes(#"Account Expandido",{{"Date", type date}, {"Sequency", Int64.Type}}),
     #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado1",{{"Sequency", Order.Ascending}}),
-    #"Colunas Reordenadas" = Table.ReorderColumns(#"Linhas Classificadas",{"EIN", "Branch", "Date", "Sequency", "Debit", "Credit", "Value", "History", "Document"}),
-    #"Linhas Agrupadas1" = Table.Group(#"Colunas Reordenadas", {"EIN", "Branch", "Date", "Sequency", "Value", "History", "Document"}, {{"Rows", each Text.Combine(_[Rows], " and "), type text}, {"All", each _, type table [EIN=text, Branch=text, Date=nullable date, Sequency=nullable number, Debit=nullable text, Credit=nullable text, Value=number, History=text, Document=any]}, {"Count", each Table.RowCount(_), Int64.Type}}),
+    #"Linhas Agrupadas1" = Table.Group(#"Linhas Classificadas", {"EIN", "Branch", "Date", "Sequency", "Value", "History", "Document"}, {{"Rows", each Text.Combine(_[Rows], " and "), type text}, {"All", each _, type table [EIN=text, Branch=text, Date=nullable date, Sequency=nullable number, Debit=nullable text, Credit=nullable text, Value=number, History=text, Document=any]}, {"Count", each Table.RowCount(_), Int64.Type}}),
     #"Linhas Classificadas1" = Table.Sort(#"Linhas Agrupadas1",{{"Sequency", Order.Ascending}}),
     #"Personalização Adicionada7" = Table.AddColumn(#"Linhas Classificadas1", "Reg", each if [Count] = 2 then Table.FromRecords({[Debit = List.Max([All][Debit]), Credit = List.Max([All][Credit])]}) else [All]),
     #"Reg Expandido" = Table.ExpandTableColumn(#"Personalização Adicionada7", "Reg", {"Debit", "Credit"}, {"Debit", "Credit"}),
@@ -236,8 +234,7 @@ let
     #"Account Expandido" = Table.ExpandRecordColumn(#"Colunas Removidas", "Account", {"Debit", "Credit", "Value"}, {"Debit", "Credit", "Value"}),
     #"Tipo Alterado1" = Table.TransformColumnTypes(#"Account Expandido",{{"Date", type date}, {"Sequency", Int64.Type}}),
     #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado1",{{"Sequency", Order.Ascending}}),
-    #"Colunas Reordenadas" = Table.ReorderColumns(#"Linhas Classificadas",{"EIN", "Branch", "Date", "Sequency", "Debit", "Credit", "Value", "History", "Document"}),
-    #"Linhas Agrupadas1" = Table.Group(#"Colunas Reordenadas", {"EIN", "Branch", "Date", "Sequency", "Value", "History", "Document"}, {{"Rows", each Text.Combine(_[Rows], " and "), type text}, {"All", each _, type table [EIN=text, Branch=text, Date=nullable date, Sequency=nullable number, Debit=nullable text, Credit=nullable text, Value=number, History=text, Document=any]}, {"Count", each Table.RowCount(_), Int64.Type}}),
+    #"Linhas Agrupadas1" = Table.Group(#"Linhas Classificadas", {"EIN", "Branch", "Date", "Sequency", "Value", "History", "Document"}, {{"Rows", each Text.Combine(_[Rows], " and "), type text}, {"All", each _, type table [EIN=text, Branch=text, Date=nullable date, Sequency=nullable number, Debit=nullable text, Credit=nullable text, Value=number, History=text, Document=any]}, {"Count", each Table.RowCount(_), Int64.Type}}),
     #"Linhas Classificadas1" = Table.Sort(#"Linhas Agrupadas1",{{"Sequency", Order.Ascending}}),
     #"Personalização Adicionada7" = Table.AddColumn(#"Linhas Classificadas1", "Reg", each if [Count] = 2 then Table.FromRecords({[Debit = List.Max([All][Debit]), Credit = List.Max([All][Credit])]}) else [All]),
     #"Reg Expandido" = Table.ExpandTableColumn(#"Personalização Adicionada7", "Reg", {"Debit", "Credit"}, {"Debit", "Credit"}),
