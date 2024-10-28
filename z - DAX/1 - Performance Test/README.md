@@ -18,6 +18,6 @@ SUMX(
 # Results I got
 
 **TIP**: Take at least 5 measures from Performance Analyzer
-- A Great PC ~   2400 ms - AMD Ryzen 7 5700X 8-Core Processor | 24 GB | SSD
+- A Great PC ~   2400 ms - AMD Ryzen 7 5700X 8-Core Processor | 24 GB | SSD | + NVIDIA GeForce RTX 3070
 - A Good  PC ~   3700 ms - Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz | 64 GB | Probably SSD
 - A Bad   PC ~ +16000 ms - Inter(R) Core(TM) i3-2370M CPU @ 2.40GHz | 8 GB | SSD
